@@ -11,16 +11,48 @@ def openfile(filename):
             listoflist.append(line)
     return listoflist
 
-def option_1():
-    display.display1()
-    a=input("Press 'q' to back to main menu : ")
-    if a=='q':
+def writetotxt():
+    os.system('clear')
+    with open('text_albums_data.txt', 'a+') as f , open('newalbum.txt', 'w') as d:     
+        singer = input("Add the singers name: ")
+        album = input("Add the album name: ") 
+        year = input("Add the release year: ")
+        genre = input("Add the genre: ") 
+        lenght = input("Add the lenght: ")
+        f.write(singer + ",")
+        f.write(album + ",")
+        f.write(year + ",")
+        f.write(genre + ",")
+        f.write(lenght)
+        f.write("\n")
+        f.close()
+        d.write(singer + ",")
+        d.write(album + ",")
+        d.write(year + ",")
+        d.write(genre + ",")
+        d.write(lenght)
+        d.write("\n")
+        d.close()
+
+
+def addsong():
+    addsong = input("To add a song to the list press 'a'!\nTo go back to menu press 'q'!\n ")
+    if addsong == "a":
+        writetotxt()
+        os.system('clear')
+        option_1()
+    elif addsong == "q":
         os.system('clear')
         display.print_program_menu(menu)
         progressmenü()
     else:
         os.system('clear')
         option_1()
+
+
+def option_1():
+    display.display1()
+    addsong()
 
 def option_2():
     lg=[]
@@ -29,14 +61,16 @@ def option_2():
         sg=set(lg)
         lg=list(sg)
     display.print_program_menu(lg)
+    spaceline()
     try:
         albumbydata(3,lg[int(input('Choose one option: '))-1])
+        spaceline()
     except:
         os.system('clear')
-        option_2()    
+        option_2()   
     print('press any key to go back to genres! ')
     a=input("Press 'q' to back to main menu : ")
-    if a=='q':
+    if a =='q':
         os.system('clear')
         display.print_program_menu(menu)
         progressmenü()
@@ -47,6 +81,7 @@ def option_2():
 def option_3():
     try:
         timerange(int(input('Shortest Time: ')),int(input('Longest Time: ')))
+        spaceline()
     except:
         os.system('clear')
         print('You have to write integers! ')
@@ -64,9 +99,12 @@ def option_3():
 def option_4():
     shortlonglist=['shortest album','longest album']
     display.print_program_menu(shortlonglist)
-    option=int(input('Choose from the options! '))
+    spaceline()
+    option=int(input('Choose from the options: '))
+    spaceline()
     if option == 1:
         shortest()
+        spaceline()
         print('press any key if you want to go back: ')
         a=input("Press 'q' to back to main menu : ")
         if a=='q':
@@ -78,6 +116,7 @@ def option_4():
             option_4()
     elif option == 2:
         longest()
+        spaceline()
         print('press any key if you want to go back: ')
         a=input("Press 'q' to back to main menu : ")
         if a=='q':
@@ -98,8 +137,10 @@ def option_5():
         si=set(li)
         li=list(si)
     display.print_program_menu(li)
+    spaceline()
     try:
         albumbydata(0,li[int(input('Choose one option: '))-1])
+        spaceline()
     except:
         os.system('clear')
         option_2() 
@@ -120,8 +161,10 @@ def option_6():
         sq=set(lq)
         lq=list(sq)
     display.print_program_menu(lq)
+    spaceline()
     try:
         albumbydata( 1 ,lq[int(input('Choose one option: '))-1])
+        spaceline()
     except:
         os.system('clear')
         option_2() 
