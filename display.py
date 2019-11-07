@@ -4,9 +4,6 @@ import os
 
     
 
-def print_program_menu(menu):
-    for option in menu:
-        print(str(menu.index(option)+1) + '-' + option)
 
 def display1():
     maxi=0
