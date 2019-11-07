@@ -1,5 +1,6 @@
 import display
 import os
+import sys
 
 def openfile(filename):
     listoflist=[]
@@ -12,7 +13,7 @@ def openfile(filename):
 
 def option_1():
     display.display1()
-    a=input("Press 'q' to back to main menu! ")
+    a=input("Press 'q' to back to main menu : ")
     if a=='q':
         os.system('clear')
         display.print_program_menu(menu)
@@ -34,7 +35,7 @@ def option_2():
         os.system('clear')
         option_2()    
     print('press any key to go back to genres! ')
-    a=input("Press 'q' to back to main menu! ")
+    a=input("Press 'q' to back to main menu : ")
     if a=='q':
         os.system('clear')
         display.print_program_menu(menu)
@@ -51,7 +52,7 @@ def option_3():
         print('You have to write integers! ')
         option_3()
     print('press any key if you want to give another range! ')
-    a=input("Press 'q' to back to main menu! ")
+    a=input("Press 'q' to back to main menu : ")
     if a=='q':
         os.system('clear')
         display.print_program_menu(menu)
@@ -67,7 +68,7 @@ def option_4():
     if option == 1:
         shortest()
         print('press any key if you want to go back: ')
-        a=input("Press 'q' to back to main menu! ")
+        a=input("Press 'q' to back to main menu : ")
         if a=='q':
             os.system('clear')
             display.print_program_menu(menu)
@@ -78,7 +79,7 @@ def option_4():
     elif option == 2:
         longest()
         print('press any key if you want to go back: ')
-        a=input("Press 'q' to back to main menu! ")
+        a=input("Press 'q' to back to main menu : ")
         if a=='q':
             os.system('clear')
             display.print_program_menu(menu)
@@ -103,7 +104,7 @@ def option_5():
         os.system('clear')
         option_2() 
     print('Press any key if you want to go back! ')
-    a=input('Press q to back to main menu : ')
+    a=input("Press 'q' to back to main menu : ")
     if a =='q':
         os.system('clear')
         display.print_program_menu(menu)
@@ -125,7 +126,7 @@ def option_6():
         os.system('clear')
         option_2() 
     print('Press any key if you want to go back! ')
-    a=input('Press q to back to main menu : ')
+    a=input("Press 'q' to back to main menu : ")
     if a =='q':
         os.system('clear')
         display.print_program_menu(menu)
@@ -134,12 +135,39 @@ def option_6():
         os.system('clear')
         option_6()
 
+def option_7():
+    print("This is the shortest Album:")
+    shortest()
+    spaceline()
+    print("This is the longest Album:")
+    longest()
+    spaceline()
+    print("These are the Last Releasead Albums from the Library:")
+    youngest()
+    spaceline()
+    print("These are the First Releasead Albums from the Library:")
+    oldest()
+    spaceline()
+    print(f"There are {howmanyalbums()} albums in the Library")
+    howmanyalbums()
+    spaceline()
+    print("How many albums by genre:")
+    howmanyalbumgivethegenres()
+    spaceline()
+    
+    a=input("Press 'q' to back to main menu : ")
+    if a =='q':
+        os.system('clear')
+        display.print_program_menu(menu)
+        progressmenü()
 
+def option_8():
+    sys.exit()
 
 def progressmenü():
     option=int(input('Choose from the options: '))
     os.system('clear')
-    if option== 1:
+    if option == 1:
         option_1() 
     elif option == 2:
         option_2()
@@ -150,7 +178,11 @@ def progressmenü():
     elif option == 5:
         option_5()  
     elif option == 6:
-        option_6() 
+        option_6()
+    elif option == 7:
+        option_7()
+    elif option == 8:
+        option_8()
     else:
         display.print_program_menu(menu)
         progressmenü()
@@ -160,7 +192,7 @@ def albumbydata(number,data):
     for album in albums:
         for dat in album:
             if dat==data and data in album[number]:
-               print(*album,sep=' ')
+               print(*album,sep=',')
         
 def timerange(mintimerange,maxtimerange):
     lt=[]
@@ -202,6 +234,61 @@ def longest():
     a=longshort()   
     for i,q,y,g,t in openfile('text_albums_data.txt'):
         if a[1] in t:
-            print (i,q,y,g,t)  
+            print (i,q,y,g,t)
 
-menu=['Albumlist','Choose by genre','Find all album by given timerange','Find th shortest\\longest album','All albums by given artist','Albums name']
+def oldestyoungest():
+    oldestyoungest=[]
+    oldest=3000
+    youngest=0
+    for i,q,y,g,t in openfile('text_albums_data.txt'):
+        y=int(y)
+        oldestyoungest.append(y)
+        for years in oldestyoungest:
+            if years>youngest:
+                youngest=years
+            if years<oldest:
+                oldest=years
+    return oldest,youngest
+
+def oldest():
+    oy=oldestyoungest()
+    for i,q,y,g,t in openfile('text_albums_data.txt'):
+        if str(oy[0]) == y:
+            print(i,q,y,g,t)
+
+def youngest():
+    oy=oldestyoungest()
+    for i,q,y,g,t in openfile('text_albums_data.txt'):
+        if str(oy[1]) == y:
+            print(i,q,y,g,t)
+
+def howmanyalbums():
+    a=len(openfile('text_albums_data.txt'))
+    return a
+
+def spaceline():
+    print("-"*55)
+
+def newline():
+    print("\n")
+
+def howmanyalbumgivethegenres():
+    genres=[]
+    howmany=[]
+    together=0
+
+    for i,q,y,g,t in openfile('text_albums_data.txt'):
+        genres.append(g)
+    for genre in genres:
+        x=genres.count(genre)
+        howmany.append(x)
+    together=zip(genres,howmany)
+    together=set(together)
+    for datas in together:
+        print(*datas,sep=': ')
+
+
+
+
+
+menu=['Albumlist','Choose by genre','Find all album by given timerange','Find th shortest\\longest album','All albums by given artist','Albums name','Reports','Quit']

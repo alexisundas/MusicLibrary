@@ -37,7 +37,7 @@ def display1():
     
     
 def main():
-    menu=['Albumlist','Choose by genre','Find all album by given timerange','Find th shortest\\longest album','All albums by given artist','Albums name']
+    menu=['Albumlist','Choose by genre','Find all album by given timerange','Find th shortest\\longest album','All albums by given artist','Albums name','Reports','Quit']
     music_reports.openfile('text_albums_data.txt')
     print_program_menu(menu)
     
